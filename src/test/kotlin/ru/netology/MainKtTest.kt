@@ -170,36 +170,7 @@ class MainKtTest {
             1
         )
 
-        val post3 = Post(
-            3,
-            12345670,
-            12345555,
-            111111,
-            1460041200,
-            "Текст поста",
-            12345689,
-            6765,
-            false,
-            CommentsObject(123, true, false, false, true),
-            CopyrightObject(23452784, "dfdfdsf", "Текст", "тип"),
-            LikesObject(4873, true, true, true),
-            RepostsObject(23, false),
-            ViewsObject(21),
-            "post", //post, copy, reply, postpone, suggest.
-            null,
-            arrayOf(attachmentNote1, attachmentPhoto1),
-            null,
-            122,
-            null,
-            true,
-            true,
-            false,
-            true,
-            false,
-            false,
-            DonutObject(true, 223, "placeholder", true, "all"),
-            1
-        )
+
 
         val update = Post(
             2,
@@ -402,36 +373,7 @@ class MainKtTest {
             1
         )
 
-        val post3 = Post(
-            3,
-            12345670,
-            12345555,
-            111111,
-            1460041200,
-            "Текст поста",
-            12345689,
-            6765,
-            false,
-            CommentsObject(123, true, false, false, true),
-            CopyrightObject(23452784, "dfdfdsf", "Текст", "тип"),
-            LikesObject(4873, true, true, true),
-            RepostsObject(23, false),
-            ViewsObject(21),
-            "post", //post, copy, reply, postpone, suggest.
-            null,
-            arrayOf(attachmentNote1, attachmentPhoto1),
-            null,
-            122,
-            null,
-            true,
-            true,
-            false,
-            true,
-            false,
-            false,
-            DonutObject(true, 223, "placeholder", true, "all"),
-            1
-        )
+
         val update = Post(
             256,
             99999999,
@@ -532,45 +474,10 @@ class MainKtTest {
             9
         )
 
-        val photo1 = Photo(
-            4358394,
-            324,
-            234545435,
-            54645,
-            "text",
-            3523552,
-            arrayOf(Sizes("size1", "url", 12, 45)),
-            145,
-            345
-        )
-
-        val note1 = Note(
-            34543543,
-            334543543,
-            "title",
-            "text",
-            23423525,
-            42,
-            5675,
-            "Url",
-            "privacyView",
-            "privacyComment",
-            true,
-            "wiki"
-        )
-
-        val gift1 = Gift(
-            33,
-            "256",
-            "96",
-            "48"
-        )
 
         val attachmentVideo1 = VideoAttachment(video1)
         val attachmentAudio1 = AudioAttachment(audio1)
-        val attachmentPhoto1 = PhotoAttachment(photo1)
-        val attachmentNote1 = NoteAttachment(note1)
-        val attachmentGift1 = GiftAttachment(gift1)
+
 
         val postNew = service.add(
             Post(
@@ -605,5 +512,102 @@ class MainKtTest {
             )
         )
         assertTrue(postNew.id > 0)
+    }
+
+    @Test (expected = PostNotFoundException::class)
+    fun createCommentNotExistsPost() {
+
+        val video1 = Video(
+            123,
+            12234,
+            "title video1",
+            "video dsc",
+            10,
+            null,
+            null,
+            232323,
+            33232323,
+            3,
+            34,
+            4,
+            "player1",
+            "platform",
+            true,
+            true,
+            "accessKey",
+            false,
+            false,
+            false,
+            true,
+            true,
+            false,
+            false,
+            true,
+            true,
+            15,
+            30,
+            3242342,
+            true,
+            false,
+            true,
+            4,
+            "type",
+            34,
+            "Status",
+            true,
+            false,
+            10,
+            VideoLikes(10,true),
+            VideoReposts(45,234234,434,false)
+        )
+
+        val attachmentVideo1 = VideoAttachment(video1)
+
+        val post1 = Post(
+            123,
+            12345689,
+            12345689,
+            111111,
+            1460041200,
+            "Текст поста",
+            12345689,
+            6765,
+            true,
+            CommentsObject(123, true, false, false,true),
+            CopyrightObject(23452784, "dfdfdsf","Текст","тип"),
+            LikesObject(4873, true, true,true),
+            RepostsObject(23, false),
+            ViewsObject(21),
+            "post", //post, copy, reply, postpone, suggest
+            null,
+            arrayOf(attachmentVideo1),
+            null,
+            12786,
+            null,
+            true,
+            false,
+            true,
+            false,
+            false,
+            true,
+            DonutObject(true, 223,"placeholder", true, "all"),
+            1
+        )
+
+        WallService.add(post1)
+
+        val comment1 = Comment(
+            1,
+            789,
+            2223434,
+            324234234,
+            "text comment 1",
+            null,
+            arrayOf(attachmentVideo1),
+            null,
+            null
+        )
+
+        WallService.createComment(comment1)
     }
 }

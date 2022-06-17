@@ -168,4 +168,22 @@ fun main(args: Array<String>) {
     WallService.add(post2)
 
     WallService.print()
+
+    val comment1 = Comment(
+        1,
+        4,
+        2223434,
+        324234234,
+        "text comment 1",
+        null,
+        arrayOf(attachmentPhoto1),
+        null,
+        null
+    )
+
+    try {
+        WallService.createComment(comment1)
+    } catch (e: PostNotFoundException){
+        println(e.message)
+    }
 }

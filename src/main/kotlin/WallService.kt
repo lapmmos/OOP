@@ -2,7 +2,8 @@ package ru.netology
 
 object WallService {
     private var posts: Array<Post> = emptyArray()
-    private var nextId: Long = 1
+    private var nextId: Int = 1
+    private var comments = emptyArray<Comment>()
 
     fun add(post: Post) : Post {
         val postNew = post.copy(id = nextId)
@@ -26,6 +27,16 @@ object WallService {
             println(post)
         }
         println("  NextId=$nextId")
+    }
+
+    fun createComment(comment: Comment) : Boolean {
+        for (post in posts){
+            if (comment.postId == post.id) {
+                comments += comment
+                return true
+            }
+        }
+        throw PostNotFoundException("Пост не найден")
     }
 
 }
